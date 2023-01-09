@@ -17,4 +17,24 @@ function buildTable(data) {
             cell.text(val);
         });
     });
-}
+};
+
+function handleClick() {
+    //get datetime from filter
+    let data = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+    //check for date and filter data from that date
+    if (date) {
+        //filter table data for only rows where datetime value matches filter value
+        filteredData = filteredData.filter(row => row.datetime === date);
+    };
+    //rebuild table with filtered data
+    //if not date is entered, filtered data will just be original/unfiltered tableData
+    buildTable(filteredData);
+};
+
+//listen event
+d3.selectAll("#filter-btn").on("click", handleClick);
+
+//build table when page loads
+buildTable(tableData);
